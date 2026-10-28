@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pharmacy Near Me: find pharmacies in Kenya</title>
+  <meta name="description" content="Find pharmacies near you in Kenya using OpenStreetMap data.">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md bg-white">
+      <div class="container">
+        <a class="navbar-brand fw-semibold" href="index.html"><i class="bi bi-capsule-pill me-2" aria-hidden="true"></i>Pharmacy Near Me</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-nav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#search">Find a Pharmacy</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container py-4" id="search">
+    <div class="row">
+      <div class="col-lg-9 col-xl-8">
+        <h1 class="h2 fw-semibold">Looking for a pharmacy nearby?</h1>
+        <p class="mb-4">Find pharmacies around you or search for another area. Check the available details before making your trip.</p>
+      </div>
+    </div>
+
+    <noscript><div class="alert alert-warning">Pharmacy Near Me needs JavaScript to search for pharmacies.</div></noscript>
+
+    <section class="card search-card shadow-sm mb-3" aria-label="Search for pharmacies">
+      <div class="card-body">
+        <form id="search-form" novalidate>
+          <label for="location-input" class="form-label fw-semibold">Town or neighbourhood</label>
+          <input type="text" class="form-control mb-3" id="location-input" maxlength="100" placeholder="For example: Thika town, Westlands, Nyali" autocomplete="off">
+          <div class="d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-primary" id="search-button"><i class="bi bi-search me-1" aria-hidden="true"></i>Search pharmacies</button>
+            <button type="button" class="btn btn-outline-primary" id="location-button"><i class="bi bi-geo-alt-fill me-1" aria-hidden="true"></i>Use my location</button>
+            <button type="button" class="btn btn-link text-secondary" id="clear-button"><i class="bi bi-x-circle me-1" aria-hidden="true"></i>Clear</button>
+          </div>
+        </form>
+        <p class="small text-muted mt-3 mb-0">
+          Your browser asks for permission only when you choose "Use my location", and your location is used once. It isn't stored.
+          Sharing location usually needs a secure (HTTPS) page or localhost. Searching sends your coordinates to the Overpass service
+          to find pharmacies, and a typed place name is sent to Nominatim to find its coordinates.
+        </p>
+      </div>
+    </section>
+
+    <div id="loading-box" class="d-none alert alert-light border d-flex align-items-center gap-3" role="status">
+      <div class="spinner-border spinner-border-sm text-secondary" aria-hidden="true"></div>
+      <span id="loading-text">Finding pharmacies near you...</span>
+    </div>
+    <div id="message-area"></div>
+
+    <section id="results-section" class="d-none" aria-label="Search results" aria-live="polite">
+      <div class="alert alert-warning small" role="note">
+        <strong>Please confirm before you travel.</strong> Details come from OpenStreetMap contributors and have not been independently verified.
+        Opening hours may be out of date, and we can't tell whether a pharmacy has a medicine in stock. Distances are approximate straight-line
+        distances, not driving or walking distances. Call ahead when you can.
+      </div>
+
+      <div id="results-tools" class="d-none mb-3">
+        <p id="results-summary" class="fw-semibold mb-2"></p>
+        <div class="d-flex flex-wrap align-items-end gap-3">
+          <div>
+            <label for="radius-select" class="form-label small mb-1">Search radius</label>
+            <select id="radius-select" class="form-select"></select>
+          </div>
+          <div>
+            <span class="form-label small d-block mb-1" id="filter-label">Show</span>
+            <div class="btn-group" role="group" aria-labelledby="filter-label">
+              <input type="radio" class="btn-check" name="filter" id="filter-all" autocomplete="off" checked>
+              <label class="btn btn-outline-primary" for="filter-all">All pharmacies</label>
+              <input type="radio" class="btn-check" name="filter" id="filter-24h" autocomplete="off">
+              <label class="btn btn-outline-primary" for="filter-24h">Reported 24-hour</label>
+              <input type="radio" class="btn-check" name="filter" id="filter-open" autocomplete="off">
+              <label class="btn btn-outline-primary" for="filter-open">Open now</label>
+            </div>
+          </div>
+          <div>
+            <label for="sort-select" class="form-label small mb-1">Order</label>
+            <select id="sort-select" class="form-select">
+              <option value="nearest">Nearest first</option>
+              <option value="name">Name A to Z</option>
+            </select>
+          </div>
+          <div class="btn-group ms-md-auto" role="group" aria-label="Choose list or map view">
+            <button type="button" id="view-list" class="btn btn-outline-primary active" aria-pressed="true"><i class="bi bi-list-ul me-1" aria-hidden="true"></i>List</button>
+            <button type="button" id="view-map" class="btn btn-outline-primary" aria-pressed="false"><i class="bi bi-map me-1" aria-hidden="true"></i>Map</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="map-wrapper" class="d-none mb-3">
+        <div id="map-message" class="alert alert-warning d-none" role="status"></div>
+        <div id="map" role="region" aria-label="Map of pharmacies"></div>
+      </div>
+
+      <div id="results-list" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3"></div>
+    </section>
+  </main>
+
+  <footer class="border-top bg-white py-3 mt-5 small text-muted">
+    <div class="container">
+      Pharmacy data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL).
+      Place search by <a href="https://nominatim.org/">Nominatim</a>. Pharmacy search by the <a href="https://overpass-api.de/">Overpass API</a>.
+    </div>
+  </footer>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/location.js"></script>
+  <script src="assets/js/pharmacy-search.js"></script>
+  <script src="assets/js/map.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

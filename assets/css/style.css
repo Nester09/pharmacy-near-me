@@ -1,0 +1,52 @@
+/* Bootstrap does most of the work. These rules only set the colours and a few details. */
+:root {
+  --pnm-navy: #12294a;
+  --pnm-teal: #1d7568;
+  --pnm-teal-dark: #165c52;
+  --pnm-bg: #f6f4ef;
+  --bs-body-bg: var(--pnm-bg);
+  --bs-body-color: #243044;
+  --bs-link-color: #165c52;
+  --bs-link-hover-color: #0f433b;
+}
+
+h1, h2, h3, .text-navy, .navbar-brand { color: var(--pnm-navy); }
+
+.btn-primary {
+  --bs-btn-bg: var(--pnm-teal);
+  --bs-btn-border-color: var(--pnm-teal);
+  --bs-btn-hover-bg: var(--pnm-teal-dark);
+  --bs-btn-hover-border-color: var(--pnm-teal-dark);
+  --bs-btn-active-bg: var(--pnm-teal-dark);
+  --bs-btn-active-border-color: var(--pnm-teal-dark);
+  --bs-btn-disabled-bg: var(--pnm-teal);
+  --bs-btn-disabled-border-color: var(--pnm-teal);
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--pnm-teal-dark);
+  --bs-btn-border-color: var(--pnm-teal);
+  --bs-btn-hover-bg: var(--pnm-teal);
+  --bs-btn-hover-border-color: var(--pnm-teal);
+  --bs-btn-active-bg: var(--pnm-teal);
+  --bs-btn-active-border-color: var(--pnm-teal);
+}
+.btn-check:checked + .btn-outline-primary { background-color: var(--pnm-teal); color: #fff; }
+
+.navbar { border-bottom: 1px solid #dcd8cc; }
+.navbar-brand .bi { color: var(--pnm-teal); }
+.navbar .nav-link.active { color: var(--pnm-navy); font-weight: 600; }
+
+.search-card { border: 1px solid #dcd8cc; }
+.pharmacy-card { border-color: #dcd8cc; }
+
+/* Comfortable touch targets on phones */
+.btn, .form-control, .form-select { min-height: 44px; }
+.btn-sm { min-height: 38px; }
+
+#map { height: 65vh; min-height: 320px; border: 1px solid #dcd8cc; }
+.leaflet-container { font-family: inherit; }
+
+.alert-warning { --bs-alert-bg: #fff4d6; --bs-alert-border-color: #f0d98c; --bs-alert-color: #5c4400; }
+.alert-danger  { --bs-alert-bg: #fde8e8; --bs-alert-border-color: #f1b5b5; --bs-alert-color: #6b1717; }
+
+footer a { color: inherit; }

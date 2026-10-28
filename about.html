@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About: Pharmacy Near Me</title>
+  <meta name="description" content="Find pharmacies near you in Kenya using OpenStreetMap data.">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md bg-white">
+      <div class="container">
+        <a class="navbar-brand fw-semibold" href="index.html"><i class="bi bi-capsule-pill me-2" aria-hidden="true"></i>Pharmacy Near Me</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-nav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#search">Find a Pharmacy</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="about.html">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container py-4">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1 class="h2 fw-semibold mb-3">About Pharmacy Near Me</h1>
+        <p>Pharmacy Near Me helps people in Kenya search for pharmacies using mapped location data. You can use your current location or type a town or neighbourhood, and the site lists the pharmacies mapped nearby, nearest first.</p>
+
+        <h2 class="h5 fw-semibold mt-4">Where the information comes from</h2>
+        <p>Pharmacy details come from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, a map built by volunteers, and are fetched live through the Overpass API. Typed places are converted to coordinates with Nominatim. Nothing on this site is made up or stored in advance.</p>
+
+        <h2 class="h5 fw-semibold mt-4">Please keep in mind</h2>
+        <div class="alert alert-warning">
+          <ul class="mb-0">
+            <li>Results depend on how complete and accurate OpenStreetMap is. Some pharmacies may not be listed.</li>
+            <li>Opening hours and contact details may be incomplete or out of date.</li>
+            <li>This website does not check that a pharmacy is open or has a medicine available.</li>
+            <li>Distances are straight-line estimates, not driving or walking distances.</li>
+            <li>Contact a pharmacy before travelling when you can.</li>
+          </ul>
+        </div>
+        <p>This website does not give medical advice. Ask a pharmacist or doctor about your health and medicines.</p>
+        <div class="alert alert-danger" role="note"><strong>In an emergency, call 999 or 112.</strong> Don't rely on this website.</div>
+
+        <h2 class="h5 fw-semibold mt-4">Help improve the data</h2>
+        <p>If a pharmacy is missing or its details are wrong, anyone can fix it on <a href="https://www.openstreetmap.org/">openstreetmap.org</a>. Corrections help everyone who uses OpenStreetMap-based tools.</p>
+
+        <h2 class="h5 fw-semibold mt-4">Your privacy</h2>
+        <p>There are no accounts, tracking scripts or advertising. Your location is used once, kept only in the open page, and sent to the Overpass service to find nearby pharmacies. A typed place name is sent to Nominatim. Closing or clearing the page removes it.</p>
+
+        <a href="index.html#search" class="btn btn-primary mt-2"><i class="bi bi-search me-1" aria-hidden="true"></i>Find a pharmacy</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-top bg-white py-3 mt-5 small text-muted">
+    <div class="container">
+      Pharmacy data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL).
+      Place search by <a href="https://nominatim.org/">Nominatim</a>. Pharmacy search by the <a href="https://overpass-api.de/">Overpass API</a>.
+    </div>
+  </footer>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
