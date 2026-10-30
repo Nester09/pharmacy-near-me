@@ -229,16 +229,38 @@ function readDayList(text) {
 function readTimeList(text) {
   var lower = text.trim().toLowerCase();
   if (lower === 'off' || lower === 'closed') { return []; }
+
   var intervals = [];
   var pieces = text.split(',');
+
   for (var i = 0; i < pieces.length; i++) {
-    var match = pieces[i].trim().match(/^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/);
+    var match = pieces[i].trim().match(
+      /^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/
+    );
+
     if (!match) { return null; }
-    var start = parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
-    var end = parseInt(match[3], 10) * 60 + parseInt(match[4], 10);
-    if (start > 1440 || end > 1440 || start === end) { return null; }
+
+    var startHour = parseInt(match[1], 10);
+    var startMinute = parseInt(match[2], 10);
+    var endHour = parseInt(match[3], 10);
+    var endMinute = parseInt(match[4], 10);
+
+    if (
+      startHour > 23 || startMinute > 59 ||
+      endHour > 24 || endMinute > 59 ||
+      (endHour === 24 && endMinute !== 0)
+    ) {
+      return null;
+    }
+
+    var start = startHour * 60 + startMinute;
+    var end = endHour * 60 + endMinute;
+
+    if (start === end) { return null; }
+
     intervals.push({ start: start, end: end });
   }
+
   return intervals;
 }
 

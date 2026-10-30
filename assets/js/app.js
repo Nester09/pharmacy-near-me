@@ -144,7 +144,18 @@ async function handleManualSearch(event) {
     state.centre = { lat: place.lat, lon: place.lon };
     state.centreLabel = place.label;
   } catch (error) {
+    state.centre = null;
+    state.centreLabel = '';
+    state.pharmacies = [];
+    state.hitLimit = false;
+
+    byId('results-section').classList.add('d-none');
+    byId('results-list').replaceChildren();
+    resetMap();
+    setView('list');
+
     setBusy(false);
+    
     if (error.code === 'not-found') {
       showMessage('warning', "We couldn't find that place. Check the spelling or try a nearby town or neighbourhood.");
     } else if (error.code === 'geocoder-busy') {
@@ -161,6 +172,9 @@ function handleClear() {
   byId('location-input').value = '';
   state.centre = null;
   state.pharmacies = [];
+  state.centreLabel = '';
+  state.hitLimit = false;
+  searchCache = {};
   state.filter = 'all';
   state.sort = 'nearest';
   byId('sort-select').value = 'nearest';

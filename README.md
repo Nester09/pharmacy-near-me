@@ -4,6 +4,8 @@ Pharmacy Near Me is a website I built to help people in Kenya find nearby pharma
 
 The website supports searches using your current location or a town or neighbourhood name. It is built with HTML, CSS, and JavaScript, without a custom backend or database.
 
+**Live Demo:** [Open Pharmacy Near Me](https://nester09.github.io/pharmacy-near-me/)
+
 ## Features
 
 - **Location search:** Find pharmacies near your current location or search by town or neighbourhood.
@@ -194,8 +196,6 @@ The following checks can be performed in a browser using localhost:
 6. Open the map view and use **Show on map** on a pharmacy card.
 7. Disconnect from the internet and check how the website handles failed requests.
 8. Inspect the browser's developer console for JavaScript errors.
-
-The project also uses mocked API responses for automated checks. Real-browser testing is important because mocked responses cannot fully reproduce the behaviour, availability, and rate limits of the external services.
 
 ## Future Improvements
 

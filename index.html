@@ -31,7 +31,7 @@
 
   <main class="container py-4" id="search">
     <div class="row">
-      <div class="col-lg-9 col-xl-8">
+      <div class="col-lg-10 col-xl-9">
         <h1 class="h2 fw-semibold">Looking for a pharmacy nearby?</h1>
         <p class="mb-4">Find pharmacies around you or search for another area. Check the available details before making your trip.</p>
       </div>
@@ -51,9 +51,9 @@
           </div>
         </form>
         <p class="small text-muted mt-3 mb-0">
-          Your browser asks for permission only when you choose "Use my location", and your location is used once. It isn't stored.
-          Sharing location usually needs a secure (HTTPS) page or localhost. Searching sends your coordinates to the Overpass service
-          to find pharmacies, and a typed place name is sent to Nominatim to find its coordinates.
+          Your browser asks for permission only when you select "Use my location". Your coordinates are kept in the current page's memory and 
+          sent to the Overpass service to find nearby pharmacies. They are not saved to a database. Clearing the search removes the current search data, 
+          and closing the page clears the in-memory data. When you search by town or neighbourhood, the place name you enter is sent to Nominatim to find its coordinates.
         </p>
       </div>
     </section>
