@@ -1,10 +1,10 @@
 // All external services and limits live here so they are easy to change later.
 var CONFIG = {
   // Overpass API: returns pharmacies mapped in OpenStreetMap.
-  overpassUrl: 'https://overpass-api.de/api/interpreter',
+  overpassUrl: 'https://api.overpass.ch/v1/ovp_jlHCtnLilchICN2JpHLcnbUGH4uIN8Jr/interpreter',
   // Optional second server, used only if the first is down (not when rate limited).
   // Leave empty to disable. Check the provider's usage policy before adding one.
-  overpassFallbackUrl: '',
+  overpassFallbackUrl: 'https://overpass.private.coffee/api/interpreter',
 
   // Geocoder: turns a typed place name into coordinates. Nominatim format.
   geocoderUrl: 'https://nominatim.openstreetmap.org/search',
