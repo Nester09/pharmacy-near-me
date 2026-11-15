@@ -71,7 +71,19 @@
       </div>
     </section>
 
-    <div id="loading-box" class="d-none alert alert-light border d-flex align-items-center gap-3" role="status">
+    <!-- Mobile indicator for search results and messages below -->
+    <button type="button" id="mobile-output-hint" class="mobile-output-hint d-none"
+      aria-controls="search-output">
+      <i class="bi bi-arrow-down-circle" aria-hidden="true"></i>
+      <span>
+        <strong>Your search updates are below</strong>
+        <small>Scroll down to view results or messages.</small>
+      </span>
+    </button>
+
+    <!-- Search results, loading states and messages -->
+    <div id="search-output">
+      <div id="loading-box" class="d-none alert alert-light border d-flex align-items-center gap-3" role="status">
       <div class="spinner-border spinner-border-sm text-secondary" aria-hidden="true"></div>
       <span id="loading-text">Finding pharmacies near you...</span>
     </div>
@@ -123,6 +135,7 @@
 
       <div id="results-list" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3"></div>
     </section>
+    </div>
   </main>
 
   <footer class="border-top bg-white py-3 mt-5 small text-muted">

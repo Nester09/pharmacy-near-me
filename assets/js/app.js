@@ -14,6 +14,48 @@ var state = {
 
 function byId(id) { return document.getElementById(id); }
 
+// ---------- Mobile search output indicator ----------
+
+var mobileOutputHintActive = false;
+var mobileOutputHintDismissed = false;
+
+function updateMobileOutputHint() {
+  var hint = byId('mobile-output-hint');
+
+  if (!mobileOutputHintActive || !window.matchMedia('(max-width: 767.98px)').matches) {
+    hint.classList.add('d-none');
+    return;
+  }
+
+  if (mobileOutputHintDismissed) {
+    hint.classList.add('d-none');
+    return;
+  }
+
+  var outputTop = byId('search-output').getBoundingClientRect().top;
+
+  // Hide the indicator once the search output is sufficiently visible.
+  if (outputTop < window.innerHeight * 0.85) {
+    mobileOutputHintDismissed = true;
+    hint.classList.add('d-none');
+    return;
+  }
+
+  hint.classList.remove('d-none');
+}
+
+function showMobileOutputHint() {
+  mobileOutputHintActive = true;
+  mobileOutputHintDismissed = false;
+  updateMobileOutputHint();
+}
+
+function hideMobileOutputHint() {
+  mobileOutputHintActive = false;
+  mobileOutputHintDismissed = false;
+  byId('mobile-output-hint').classList.add('d-none');
+}
+
 // Small helper so cards are built with textContent, never innerHTML.
 function makeElement(tag, className, text) {
   var node = document.createElement(tag);
@@ -38,10 +80,12 @@ function showMessage(type, text, actionButton) {
   alert.appendChild(makeElement('span', 'flex-grow-1', text));
   if (actionButton) { alert.appendChild(actionButton); }
   byId('message-area').replaceChildren(alert);
+  showMobileOutputHint();
 }
 
 function setBusy(isBusy, text) {
   state.busy = isBusy;
+  if (isBusy) { showMobileOutputHint(); }
   byId('loading-box').classList.toggle('d-none', !isBusy);
   if (text) { byId('loading-text').textContent = text; }
   ['search-button', 'location-button', 'clear-button', 'radius-select'].forEach(function (id) {
@@ -169,6 +213,7 @@ async function handleManualSearch(event) {
 }
 
 function handleClear() {
+  hideMobileOutputHint();
   byId('location-input').value = '';
   state.centre = null;
   state.pharmacies = [];
@@ -446,6 +491,19 @@ document.addEventListener('DOMContentLoaded', function () {
   radiusSelect.value = String(state.radius);
 
   byId('search-form').addEventListener('submit', handleManualSearch);
+  
+  // Let mobile users jump directly to the search output.
+  byId('mobile-output-hint').addEventListener('click', function () {
+    byId('search-output').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+
+  // Hide the indicator as the user scrolls towards the output.
+  window.addEventListener('scroll', updateMobileOutputHint, { passive: true });
+  window.addEventListener('resize', updateMobileOutputHint);
+
   byId('location-button').addEventListener('click', handleUseLocation);
   byId('clear-button').addEventListener('click', handleClear);
 

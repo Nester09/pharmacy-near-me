@@ -50,3 +50,46 @@ h1, h2, h3, .text-navy, .navbar-brand { color: var(--pnm-navy); }
 .alert-danger  { --bs-alert-bg: #fde8e8; --bs-alert-border-color: #f1b5b5; --bs-alert-color: #6b1717; }
 
 footer a { color: inherit; }
+
+/* Mobile indicator for search output below the search form */
+.mobile-output-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #b8d8d1;
+  border-radius: 8px;
+  background-color: #edf7f4;
+  color: var(--pnm-teal-dark);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-output-hint > i {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.mobile-output-hint span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-output-hint small {
+  color: #52645f;
+}
+
+#search-output {
+  scroll-margin-top: 16px;
+}
+
+/* The indicator is only needed on smaller screens */
+@media (min-width: 768px) {
+  .mobile-output-hint {
+    display: none !important;
+  }
+}
