@@ -65,8 +65,10 @@
         </form>
         <p class="small text-muted mt-3 mb-0">
           Your browser asks for permission only when you select "Use my location". Your coordinates are kept in the current page's memory and 
-          sent to the Overpass service to find nearby pharmacies. They are not saved to a database. Clearing the search removes the current search data, 
-          and closing the page clears the in-memory data. When you search by town or neighbourhood, the place name you enter is sent to Nominatim to find its coordinates.
+          sent to Overpass.ch to find nearby pharmacies. If the primary pharmacy service request fails for a reason other than a rate-limit response, 
+          the fallback service at overpass.private.coffee may also receive the coordinates. They are not saved to a database. Clearing the search removes 
+          the current search data, and closing the page clears the in-memory data. When you search by town or neighbourhood, the place name you enter is sent 
+          to Overpass.ch for geocoding.
         </p>
       </div>
     </section>
@@ -141,7 +143,7 @@
   <footer class="border-top bg-white py-3 mt-5 small text-muted">
     <div class="container">
       Pharmacy data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL).
-      Place search by <a href="https://nominatim.org/">Nominatim</a>. Pharmacy search by the <a href="https://overpass-api.de/">Overpass API</a>.
+      Pharmacy search and place geocoding provided by <a href="https://overpass.ch/">Overpass.ch</a>.
     </div>
   </footer>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

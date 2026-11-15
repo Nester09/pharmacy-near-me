@@ -427,8 +427,8 @@ function renderResults(skipEmptyMessage) {
   byId('results-summary').textContent = summary;
 
   if (state.hitLimit) {
-    showMessage('warning', 'This area has a lot of pharmacies, so only the first ' + CONFIG.maxResults +
-      ' found are shown. Try a smaller radius for a complete list.');
+    showMessage('warning', 'This search reached the maximum of ' + CONFIG.maxResults + 
+      ' results. Try a smaller radius to narrow the results.');
   } else if (!byId('message-area').hasChildNodes() && nextRadius() && total < 3) {
     showMessage('info', 'Only a few pharmacies are mapped here.',
       makeActionButton('Search within ' + (nextRadius() / 1000) + ' km', function () {

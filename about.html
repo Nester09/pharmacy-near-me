@@ -48,7 +48,7 @@
         <p>Pharmacy Near Me helps people in Kenya search for pharmacies using mapped location data. You can use your current location or type a town or neighbourhood, and the site lists the pharmacies mapped nearby, nearest first.</p>
 
         <h2 class="h5 fw-semibold mt-4">Where the information comes from</h2>
-        <p>Pharmacy details come from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, a map built by volunteers, and are fetched live through the Overpass API. Typed places are converted to coordinates with Nominatim. Nothing on this site is made up or stored in advance.</p>
+        <p>Pharmacy details come from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, a map built by volunteers. The website retrieves this information when you search, using the Overpass.ch API. When you enter a town or neighbourhood, its name is converted into coordinates using Overpass.ch's Nominatim-compatible geocoding service. The website does not maintain its own pharmacy directory.</p>
 
         <h2 class="h5 fw-semibold mt-4">Please keep in mind</h2>
         <div class="alert alert-warning">
@@ -67,7 +67,7 @@
         <p>If a pharmacy is missing or its details are wrong, anyone can fix it on <a href="https://www.openstreetmap.org/">openstreetmap.org</a>. Corrections help everyone who uses OpenStreetMap-based tools.</p>
 
         <h2 class="h5 fw-semibold mt-4">Your privacy</h2>
-        <p>There are no accounts, tracking scripts or advertising. Your location is accessed only when you choose to use the "Use my location" option. It is kept only in the current page session and sent to the Overpass service to find nearby pharmacies. A typed place name is sent to Nominatim for location search. Your location data is not stored in a database by this website. Clearing the search or closing the page removes the locally held location data.</p>
+        <p>There are no accounts, tracking scripts or advertising. Your location is accessed only when you choose to use the "Use my location" option. The coordinates are kept in the current page and sent to Overpass.ch to find nearby pharmacies. If the primary pharmacy service request fails for a reason other than a rate-limit response, the fallback service at overpass.private.coffee may also receive the coordinates. A typed place name is sent to Overpass.ch for geocoding. This website does not store your location in a database. Clearing the search or closing the page removes the locally held location data.</p>
 
         <a href="index.html#search" class="btn btn-primary mt-2"><i class="bi bi-search me-1" aria-hidden="true"></i>Find a pharmacy</a>
       </div>
@@ -77,7 +77,7 @@
   <footer class="border-top bg-white py-3 mt-5 small text-muted">
     <div class="container">
       Pharmacy data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL).
-      Place search by <a href="https://nominatim.org/">Nominatim</a>. Pharmacy search by the <a href="https://overpass-api.de/">Overpass API</a>.
+      Pharmacy search and place geocoding provided by <a href="https://overpass.ch/">Overpass.ch</a>.
     </div>
   </footer>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

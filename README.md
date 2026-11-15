@@ -29,8 +29,9 @@ The website does not require user accounts, a database, or a custom backend. It 
 - Bootstrap Icons 1.13.2
 - Leaflet 1.9.4
 - Browser Geolocation API
-- OpenStreetMap and the Overpass API
-- Nominatim for place-name searches
+- OpenStreetMap data
+- Overpass.ch API for pharmacy searches
+- Overpass.ch Nominatim-compatible API for place-name searches
 
 Bootstrap, Bootstrap Icons, and Leaflet are stored locally in the `vendor/` directory, so the website does not depend on CDNs to load these libraries. Their respective MIT, MIT, and BSD-2-Clause licences are included in their folders.
 
@@ -102,7 +103,9 @@ Geolocation requires HTTPS or localhost in supported browsers.
 
 ### 2. Finding Pharmacies
 
-The Overpass API retrieves OpenStreetMap elements tagged with `amenity=pharmacy` or `healthcare=pharmacy`. The query includes nodes, ways, and relations within the selected radius.
+The Overpass.ch API retrieves OpenStreetMap elements tagged with `amenity=pharmacy` or `healthcare=pharmacy`. The query includes nodes, ways, and relations within the selected radius.
+
+Overpass.ch is the primary service. An optional fallback server is configured for pharmacy searches if the primary request fails. The application does not switch to the fallback after receiving a rate-limit response.
 
 The returned data is processed to handle missing information, obtain coordinates, remove likely duplicates based on pharmacy names and proximity, and calculate distances from the searched location.
 
@@ -114,7 +117,9 @@ The website also handles HTTP 429 rate-limit responses by pausing further reques
 
 Users can enter a place name instead of sharing their current location.
 
-When **Search pharmacies** is selected, the website sends the place name to Nominatim, with searches restricted to Kenya. The first matching result is used as the search location.
+When **Search pharmacies** is selected, the website sends the place name to Overpass.ch's Nominatim-compatible geocoding endpoint, with searches restricted to Kenya. The first matching result is used as the search location.
+
+Requests are spaced at least 1.1 seconds apart to avoid sending repeated geocoding requests too quickly.
 
 The matched place name is displayed above the results. If no matching location is found, the website displays a message instead of searching using an invalid location.
 
@@ -144,19 +149,21 @@ Pharmacy information comes from OpenStreetMap and is subject to its Open Databas
 
 Visit the [OpenStreetMap website](https://www.openstreetmap.org/) to learn more about the project.
 
-### Overpass API
+### Overpass.ch API
 
-The Overpass API is used to retrieve pharmacy data. Public instances are shared by multiple users, so requests should be kept reasonable.
+The Overpass.ch API is used to retrieve pharmacy information from OpenStreetMap. The application sends queries to its authenticated Overpass endpoint and processes the returned data to display nearby pharmacies.
 
-See the [Overpass API documentation and public instances](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances) for more information.
+An optional fallback server, Overpass Private Coffee (`overpass.private.coffee`), is configured through `overpassFallbackUrl` in `config.js`. It is used when the primary request fails for a reason other than a rate-limit response.
 
-An optional fallback server can be configured through `overpassFallbackUrl` in `config.js`. It is empty by default and is used only when the primary server is unavailable, not when a rate limit has been reached.
+See the [Overpass.ch documentation](https://overpass.ch/docs) for information about its API, usage limits, and available plans.
 
-### Nominatim
+### Geocoding
 
-Nominatim converts manually entered place names into geographic coordinates.
+Place-name searches use Overpass.ch's Nominatim-compatible geocoding endpoint. It converts manually entered town and neighbourhood names into geographic coordinates using OpenStreetMap data.
 
-Its [usage policy](https://operations.osmfoundation.org/policies/nominatim/) requires responsible use. The website sends one request for each deliberate search, does not use autocomplete, and waits at least 1.1 seconds between requests.
+The application restricts searches to Kenya and spaces requests to avoid sending them too frequently.
+
+See the [Overpass.ch geocoding documentation](https://overpass.ch/geocoding) for more information.
 
 ### OpenStreetMap Map Tiles
 
@@ -168,9 +175,13 @@ If the website attracts more traffic, an appropriate tile provider should be sel
 
 ### API Keys and Privacy
 
-The current implementation does not use API keys or require a private backend service.
+The application uses an Overpass.ch API key for pharmacy searches and geocoding. The key is included in the service URLs configured in `assets/js/config.js`.
 
-If a future version uses a service that requires a private API key, the key should not be placed in frontend JavaScript because visitors can inspect the code. A backend or serverless function would be needed to protect it.
+Because the application runs entirely in the browser, the key is visible in its frontend code and network requests. It is restricted through the Overpass.ch allowed-referer settings to reduce unauthorised use. Requests without a referer are also rejected.
+
+The application does not have a custom backend or database. Location coordinates are sent to Overpass.ch when searching for nearby pharmacies. If the primary pharmacy service request fails, the configured fallback server may also receive the search coordinates. Typed place names are sent to Overpass.ch for geocoding.
+
+The website does not store location information in a database. Location data is held in the current page while the search is running.
 
 ## Limitations
 
@@ -179,8 +190,8 @@ If a future version uses a service that requires a private API key, the key shou
 - Opening hours depend on the information available and the formats the website can interpret.
 - The website cannot confirm whether a pharmacy is currently staffed, has medicines in stock, or is accepting customers.
 - Distances are calculated in a straight line and may differ significantly from actual travel distances.
-- The public APIs and map services may be slow, temporarily unavailable, or subject to usage limits.
-- Searching for a place depends on Nominatim finding a suitable match.
+- External APIs and map services may be slow, temporarily unavailable, or subject to usage limits.
+- Searching for a place depends on the geocoding service finding a suitable match.
 
 The results should therefore be used as a starting point for finding pharmacies. Where necessary, contact the pharmacy directly to confirm its location, opening hours, and availability.
 
