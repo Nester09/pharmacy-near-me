@@ -178,7 +178,7 @@ function removeDuplicates(pharmacies) {
   pharmacies.forEach(function (candidate) {
     var isDuplicate = kept.some(function (existing) {
       if (existing.id === candidate.id) { return true; }
-      if (!existing.name || existing.name !== candidate.name) { return false; }
+      if (!existing.name || existing.name.toLowerCase() !== candidate.name.toLowerCase()) { return false; }
       if (existing.lat === null || candidate.lat === null) { return false; }
       return calculateDistanceMetres(existing.lat, existing.lon, candidate.lat, candidate.lon) < 30;
     });

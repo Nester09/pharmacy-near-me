@@ -6,10 +6,10 @@ var CONFIG = {
   // Leave empty to disable. Check the provider's usage policy before adding one.
   overpassFallbackUrl: 'https://overpass.private.coffee/api/interpreter',
 
-  // Geocoder: turns a typed place name into coordinates. Nominatim format.
-  geocoderUrl: 'https://nominatim.openstreetmap.org/search',
+  // Geocoder: turns a typed place name into coordinates.
+  geocoderUrl: 'https://api.overpass.ch/v1/ovp_jlHCtnLilchICN2JpHLcnbUGH4uIN8Jr/nominatim/search',
   geocoderCountryCodes: 'ke',
-  geocoderMinGapMs: 1100, // Nominatim allows at most 1 request per second
+  geocoderMinGapMs: 1100,
 
   // Map tiles. The standard OpenStreetMap tile server is meant for light use.
   // For a busy site, switch to a provider whose terms allow your traffic.
