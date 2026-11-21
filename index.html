@@ -64,6 +64,17 @@
             <button type="button" class="btn btn-link text-secondary" id="clear-button"><i class="bi bi-x-circle me-1" aria-hidden="true"></i>Clear</button>
           </div>
         </form>
+
+        <!-- Mobile indicator for search results and messages below -->
+        <button type="button" id="mobile-output-hint" class="mobile-output-hint d-none"
+          aria-controls="search-output">
+          <i class="bi bi-arrow-down-circle" aria-hidden="true"></i>
+          <span>
+            <strong>Your search updates are below</strong>
+            <small>Scroll down to view results or messages.</small>
+          </span>
+        </button>
+
         <p class="small text-muted mt-3 mb-0">
           Your browser asks for permission only when you select "Use my location". Your coordinates are kept in the current page's memory and 
           sent to Overpass.ch to find nearby pharmacies. If the primary pharmacy service request fails for a reason other than a rate-limit response, 
@@ -73,16 +84,6 @@
         </p>
       </div>
     </section>
-
-    <!-- Mobile indicator for search results and messages below -->
-    <button type="button" id="mobile-output-hint" class="mobile-output-hint d-none"
-      aria-controls="search-output">
-      <i class="bi bi-arrow-down-circle" aria-hidden="true"></i>
-      <span>
-        <strong>Your search updates are below</strong>
-        <small>Scroll down to view results or messages.</small>
-      </span>
-    </button>
 
     <!-- Search results, loading states and messages -->
     <div id="search-output">
